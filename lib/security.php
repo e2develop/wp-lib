@@ -6,14 +6,24 @@ add_filter('login_errors', function () {
     return '入力内容を確認の上、もう一度送信してください。';
 });
 
-// 作成者アーカイブを無効化(WordPressのサイトアドレスURL/?author=1 などでアクセスされた際にURLにユーザー名が表示される機能を無効化)
+// /?author=1 でアクセスされた際にURLにユーザー名が表示される機能を無効化)
+add_action('init', function () {
+    if (isset($_SERVER['REQUEST_URI'])) {
+        if (! is_admin() && preg_match('/[?&]author=[0-9]+/i', $_SERVER['REQUEST_URI'])) {
+            wp_safe_redirect(home_url(), 301);
+            exit;
+        }
+    }
+});
+
+// 作成者アーカイブを無効化
 add_action('template_redirect', function () {
     if (!is_admin() && is_author()) {
         global $wp_query;
         $wp_query->set_404();
-        status_header( 404 );
+        status_header(404);
         nocache_headers();
-}
+    }
 });
 
 
