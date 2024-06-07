@@ -95,7 +95,6 @@ add_filter('tiny_mce_before_init', function ($init) {
     // テキスト -> ビジュアルエディタ変換時に、pタグや、brタグ以外のタグが消えてしまうのをやめさせる
     $init['indent'] = true;
     $init['wpautop'] = false;
-    $init['tadv_noautop'] = true;
 
     return $init;
 });
