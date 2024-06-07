@@ -153,6 +153,7 @@ add_filter(
 
 add_action('wp_enqueue_scripts', function (): void {
     // wp-block-library-css を読み込まない
+    // ブロックエディタ(Gutenberg)のcss読み込み
     wp_dequeue_style('wp-block-library');
 
     // QueryMonitor がインストールされていない場合のみ、 WordPress の jquery.js を読み込まない
@@ -162,9 +163,6 @@ add_action('wp_enqueue_scripts', function (): void {
 
     // wp-embed.min.js を読み込まない
     wp_deregister_script('wp-embed');
-
-    // ブロックエディタ(Gutenberg)のcss読み込みを削除
-    wp_dequeue_style('wp-block-library');
 
     // 有効なプラグインで生成されるcssの読み込みを削除する
     wp_dequeue_style('toc-screen');
