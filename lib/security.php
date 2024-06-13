@@ -167,3 +167,16 @@ add_action('wp_enqueue_scripts', function (): void {
     // 有効なプラグインで生成されるcssの読み込みを削除する
     wp_dequeue_style('toc-screen');
 });
+
+
+// CSS や JavaScript ファイルの読み込み時にバージョン情報を削除する
+function _removeVer($src)
+{
+    if (strpos($src, 'ver=')) {
+        $src = remove_query_arg('ver', $src);
+    }
+
+    return $src;
+}
+add_filter('style_loader_src', '_removeVer', 9999);
+add_filter('script_loader_src', '_removeVer', 9999);
