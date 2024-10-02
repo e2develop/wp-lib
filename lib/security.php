@@ -172,6 +172,11 @@ add_action('wp_enqueue_scripts', function (): void {
 // CSS や JavaScript ファイルの読み込み時にバージョン情報を削除する
 function _removeVer($src)
 {
+
+    if (is_admin()) {
+        return $src;
+    }
+
     if (strpos($src, 'ver=')) {
         $src = remove_query_arg('ver', $src);
     }
