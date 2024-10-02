@@ -173,7 +173,7 @@ add_action('wp_enqueue_scripts', function (): void {
 function _removeVer($src)
 {
 
-    if (is_admin()) {
+    if (!is_string($src)) {
         return $src;
     }
 
