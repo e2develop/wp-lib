@@ -115,6 +115,7 @@ add_filter(
 );
 
 // REST API 無効化
+// 特定のプラグインを除外する場合は、$namespaces にプラグインの名前空間を追加する
 add_filter(
     'rest_pre_dispatch',
     function ($result, $server, $request) {
@@ -127,6 +128,18 @@ add_filter(
             return $result;
         }
 
+        // 特定のプラグインを除外する場合は REST URL の /wp-json/ と次のスラッシュの間の文字列を設定する
+        $namespaces = [
+            'aioseo',          // All in One SEO
+            'contact-form-7',  // Contact Form 7
+            'yoast',           // Yoast SEO
+        ];
+        $route = trim($request->get_route(), '/');
+        foreach ($namespaces as $namespace) {
+            if (strpos($route, $namespace) === 0) {
+                return $result;
+            }
+        }
         $status = [
             'status' => rest_authorization_required_code(),
         ];
@@ -136,20 +149,6 @@ add_filter(
     10,
     3
 );
-// REST API 無効化
-// 特定のプラグインを除外する場合（contact-form-7 を除外）
-// add_filter(
-//    'rest_pre_dispatch', function($result, $server, $request) {
-//         $namespace = $request->get_route();
-//        if (strpos($namespace, 'contact-form-7') === 1) {
-//            return $result;
-//        }
-//        $status = [
-//            'status' => rest_authorization_required_code(),
-//        ];
-//        return new WP_Error('rest_disabled', __('The REST API on this site has been disabled.'), $status);
-//    }
-//, 10, 3);
 
 add_action('wp_enqueue_scripts', function (): void {
     // wp-block-library-css を読み込まない
