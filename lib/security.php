@@ -150,6 +150,9 @@ add_filter(
     3
 );
 
+// contain-intrinsic-size の css 削除
+remove_action('wp_head', 'wp_print_auto_sizes_contain_css_fix', 1);
+
 add_action('wp_enqueue_scripts', function (): void {
     // wp-block-library-css を読み込まない
     // ブロックエディタ(Gutenberg)のcss読み込み
