@@ -158,6 +158,12 @@ add_action('wp_enqueue_scripts', function (): void {
     // ブロックエディタ(Gutenberg)のcss読み込み
     wp_dequeue_style('wp-block-library');
 
+    // ブロックエディターのスタイル削除
+    wp_dequeue_style('global-styles');
+
+    // クラシックエディターのスタイル削除
+    wp_dequeue_style('classic-theme-styles');
+
     // QueryMonitor がインストールされていない場合のみ、 WordPress の jquery.js を読み込まない
     if (!defined('QM_VERSION')) {
         wp_deregister_script('jquery');
