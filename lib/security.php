@@ -87,6 +87,9 @@ remove_filter('the_content_feed', 'wp_staticize_emoji');
 remove_filter('comment_text_rss', 'wp_staticize_emoji');
 remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 
+// meta name=’robots’ content=’max-image-preview:large’ の削除
+remove_filter( 'wp_robots', 'wp_robots_max_image_preview_large' );
+
 // xmlrpc.phpの無効化
 add_filter('xmlrpc_enabled', '__return_false');
 
