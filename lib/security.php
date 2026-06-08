@@ -117,41 +117,21 @@ add_filter(
     2
 );
 
-// REST API 無効化
-// 特定のプラグインを除外する場合は、$namespaces にプラグインの名前空間を追加する
-add_filter(
-    'rest_pre_dispatch',
-    function ($result, $server, $request) {
-        // Basic 認証時は無効化しない
-        if (isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
-            return $result;
-        }
+// /wp-json/wp/v2/users エンドポイントを非表示
+add_filter('rest_endpoints', function($endpoints) {
 
-        if (current_user_can('edit_posts') || current_user_can('edit_pages')) {
-            return $result;
-        }
+    if (is_user_logged_in()) {
+        return $endpoints;
+    }
 
-        // 特定のプラグインを除外する場合は REST URL の /wp-json/ と次のスラッシュの間の文字列を設定する
-        $namespaces = [
-            'aioseo',          // All in One SEO
-            'contact-form-7',  // Contact Form 7
-            'yoast',           // Yoast SEO
-        ];
-        $route = trim($request->get_route(), '/');
-        foreach ($namespaces as $namespace) {
-            if (strpos($route, $namespace) === 0) {
-                return $result;
-            }
+    foreach (array_keys($endpoints) as $endpoint) {
+        if ( strpos($endpoint, '/wp/v2/users') === 0 ) {
+            unset($endpoints[ $endpoint ]);
         }
-        $status = [
-            'status' => rest_authorization_required_code(),
-        ];
+    }
 
-        return new WP_Error('rest_disabled', __('The REST API on this site has been disabled.'), $status);
-    },
-    10,
-    3
-);
+    return $endpoints;
+});
 
 // contain-intrinsic-size の css 削除
 remove_action('wp_head', 'wp_print_auto_sizes_contain_css_fix', 1);
