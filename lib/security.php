@@ -133,6 +133,19 @@ add_filter('rest_endpoints', function($endpoints) {
     return $endpoints;
 });
 
+// wp-sitemap.xml 投稿者アーカイブを無効化
+add_filter(
+    'wp_sitemaps_add_provider',
+    function ($provider, $name) {
+        if ($name === 'users') {
+            return false;
+        }
+
+        return $provider;
+    },
+    10, 2
+);
+
 // contain-intrinsic-size の css 削除
 remove_action('wp_head', 'wp_print_auto_sizes_contain_css_fix', 1);
 
