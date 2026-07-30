@@ -7,6 +7,7 @@ add_filter('login_errors', function () {
 });
 
 // /?author=1 でアクセスされた際にURLにユーザー名が表示される機能を無効化)
+// 投稿者アーカイブ機能の無効化
 add_action('init', function () {
     if (isset($_SERVER['REQUEST_URI'])) {
         if (! is_admin() && preg_match('/[?&]author=[0-9]+/i', $_SERVER['REQUEST_URI'])) {
@@ -133,7 +134,7 @@ add_filter('rest_endpoints', function($endpoints) {
     return $endpoints;
 });
 
-// wp-sitemap.xml 投稿者アーカイブを無効化
+// wp-sitemap.xml ユーザーサイトマップを無効化
 add_filter(
     'wp_sitemaps_add_provider',
     function ($provider, $name) {
