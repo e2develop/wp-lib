@@ -13,11 +13,13 @@
 
 [セキュリティ関連の設定](https://redmine.e-2.jp/projects/wp/wiki/%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E5%AF%BE%E7%AD%96)
 
-- author ページを無効化
+- author ページ（投稿者アーカイブ機能）を無効化
+- REST APIユーザーエンドポイント無効化
+- ユーザーサイトマップ無効化
 - ログイン詳細エラーメッセージの無効化
-- 不要なヘッダーの削除、REST API の無効化など
- 
-### version.php 
+- 不要なヘッダーの削除
+
+### version.php
 
 [更新関連の設定](https://redmine.e-2.jp/projects/wp/wiki/%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0%E3%81%AE%E5%AF%BE%E5%BF%9C)
 
